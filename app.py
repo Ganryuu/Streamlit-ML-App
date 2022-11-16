@@ -4,7 +4,7 @@ import plotly.express as px
 from pycaret import classification  
 from pycaret import regression 
 from pandas_profiling import ProfileReport
-
+from PIL import Image 
 import pandas as pd
 from pandas_profiling import profile_report
 
@@ -22,7 +22,9 @@ if os.path.exists('./dataset.csv'):
     df = pd.read_csv('dataset.csv', index_col=None)
 
 with st.sidebar: 
-    st.image("./assets/ai.svg", caption="AI", width=60, use_column_width = 'always') 
+    side_img = Image.open('./assets/ai.png')
+    img_1 = side_img.resize((200,200))
+    st.image(img_1, caption="Automated ML App") 
     st.title("Automated ML Tasks")
     choice = st.radio("Navigation", ["Upload your Data","EDA","Create Your Model", "Download Your Model"])
     st.info("Explore your data and Build your model ")
@@ -66,6 +68,6 @@ if choice == "Create Your Model":
         regression.save_model(best_model, 'best_model')
 
 if choice == "Download Your Model": 
-    st.image("./assets/Download-amico.svg")
+    st.image("./assets/Download-amico.png")
     with open('best_performing_model.pkl', 'rb') as f: 
         st.download_button('Download Model', f, file_name="best_model.pkl")
